@@ -13,6 +13,15 @@ const amount = document.getElementById('amount');
 //   { id: 4, text: 'Camera', amount: 150 }
 // ];
 
+const localStorageTransactions = JSON.parse(
+   localStorage.getItem('transactions')
+);
+
+let transactions =
+   localStorage.getItem('transactions') !== null
+      ? localStorageTransactions
+      : [];
+
 // Add transaction
 function addTransaction(e) {
    e.preventDefault();
@@ -91,7 +100,14 @@ function updateValues() {
 function removeTransaction(id) {
    transactions = transactions.filter((transaction) => transaction.id !== id);
 
+   updateLocalStorage();
+
    init();
+}
+
+// Update local storage transactions
+function updateLocalStorage() {
+   localStorage.setItem('transactions', JSON.stringify(transactions));
 }
 
 // Init app
